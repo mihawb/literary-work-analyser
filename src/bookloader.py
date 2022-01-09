@@ -1,7 +1,9 @@
+import json
+import os
 from urllib.request import urlopen
-import json, os
 
-def progressBar(iterable, prefix = 'Progress:', suffix = 'Complete', decimals = 1, length = 50, fill = '█', printEnd = '\r'):
+
+def progressBar(iterable, prefix='Progress:', suffix='Complete', decimals=1, length=50, fill='█', printEnd='\r'):
     """
     Call in a loop to create terminal progress bar
     @params:
@@ -14,32 +16,35 @@ def progressBar(iterable, prefix = 'Progress:', suffix = 'Complete', decimals = 
         printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
     """
     total = len(iterable)
-    
-    def printProgressBar (iteration):
+
+    def printProgressBar(iteration):
         percent = ('{0:.' + str(decimals) + 'f}').format(100 * (iteration / float(total)))
         filledLength = int(length * iteration // total)
         bar = fill * filledLength + '-' * (length - filledLength)
-        print(f'{prefix} |{bar}| {percent}% {suffix}', end = printEnd)
-    
+        print(f'{prefix} |{bar}| {percent}% {suffix}', end=printEnd)
+
     printProgressBar(0)
-    
+
     for i, item in enumerate(iterable):
         yield i, item
         printProgressBar(i + 1)
-    
+
     print()
+
 
 def getJSONfromURL(url):
     response = urlopen(url)
     return json.loads(response.read())
 
-if __name__ == "__main__":
+
+def scrap_data():
     books = getJSONfromURL('https://wolnelektury.pl/api/books/')
 
     if not os.path.isdir('../books'):
         os.mkdir('../books')
-        
-    errloghand = open('../bookloader_err.log', 'w', encoding = 'utf-8')
+
+    print('sth')
+    errloghand = open('../bookloader_err.log', 'w', encoding='utf-8')
     errcount = 1
 
     for bookcount, book in progressBar(books):
@@ -51,7 +56,7 @@ if __name__ == "__main__":
 
         try:
             response = urlopen(txturl)
-            bhand = open(f"../books/{book['author']}_{book['slug']}.txt", 'w', encoding = 'utf-8')
+            bhand = open(f"../books/{book['author']}_{book['slug']}.txt", 'w', encoding='utf-8')
 
             for line in response.readlines():
                 bhand.write(line.decode('utf-8').rstrip() + '\n')
