@@ -4,11 +4,12 @@ from tkinter import filedialog as fd
 from tkinter import messagebox
 
 from src.bookloader import scrap_data
-from src.fileUtils import readFileContent
+from src.fileUtils import read_file_content
 
 arrayWithWord = []
 
 
+# Selecting file
 def select_file():
     filetypes = (
         ('text files', '*.txt'),
@@ -20,19 +21,19 @@ def select_file():
         initialdir='/',
         filetypes=filetypes)
 
-    readFileContent(path, arrayWithWord)
+    read_file_content(path, arrayWithWord)
 
 
 def analize():
-
     if len(arrayWithWord) == 0:
         messagebox.showwarning("Błąd", "Brak słów do analizy")
 
     for word in arrayWithWord:
         print(word)
-        #TODO cała mechanika znajdywnia tekstu
+        # TODO cała mechanika znajdywnia tekstu
 
 
+# Main class with whole GUI
 class MainWindow:
     def __init__(self, win):
         self.lbl1 = tk.Label(win, text='Wyszukiwanie dzieła na podstawie słów', font="none 14 bold", padx=40, pady=40)
@@ -48,6 +49,7 @@ class MainWindow:
 
         self.load_button.grid(column=0, row=3)
 
+        # Empty space
         self.lbl4 = tk.Label(win, text='', font="none 12", padx=10, pady=10)
         self.lbl4.grid(column=0, row=4)
 
@@ -61,6 +63,7 @@ class MainWindow:
         )
         self.open_button.grid(column=0, row=6)
 
+        # Empty space
         self.lbl4 = tk.Label(win, text='', font="none 12", padx=10, pady=10)
         self.lbl4.grid(column=0, row=7)
 
@@ -77,7 +80,7 @@ class MainWindow:
         self.lbl5 = tk.Label(win, text='Dalsze operacje...', font="none 12", padx=40, pady=40)
         self.lbl5.grid(column=0, row=11)
 
-
+# Running program
 window = tk.Tk()
 window.title('Text searcher')
 window.resizable(False, False)
