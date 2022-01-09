@@ -18,11 +18,12 @@ def select_file(array_with_word):
 
 
 # Reading word from file to given array
-def read_file_content(path, array):
+def read_file_content(path, array_with_word):
+    array_with_word.clear()
     with open(path, 'r') as file:
         for line in file:
             for word in line.split():
-                array.append(word)
+                array_with_word.append(word)
 
 
 def analize(array_with_word):
