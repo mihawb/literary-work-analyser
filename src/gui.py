@@ -1,36 +1,10 @@
 import tkinter as tk
 from tkinter import ttk
-from tkinter import filedialog as fd
-from tkinter import messagebox
 
 from src.bookloader import scrap_data
-from src.fileUtils import read_file_content
+from src.menu_methods import select_file, analize
 
-arrayWithWord = []
-
-
-# Selecting file
-def select_file():
-    filetypes = (
-        ('text files', '*.txt'),
-        ('All files', '*.*')
-    )
-
-    path = fd.askopenfilename(
-        title='Open a file',
-        initialdir='/',
-        filetypes=filetypes)
-
-    read_file_content(path, arrayWithWord)
-
-
-def analize():
-    if len(arrayWithWord) == 0:
-        messagebox.showwarning("Błąd", "Brak słów do analizy")
-
-    for word in arrayWithWord:
-        print(word)
-        # TODO cała mechanika znajdywnia tekstu
+array_with_word = []
 
 
 # Main class with whole GUI
@@ -42,10 +16,11 @@ class MainWindow:
         self.lbl2 = tk.Label(win, text='Wczytaj dzieła ze strony', font="none 12")
         self.lbl2.grid(column=0, row=1)
 
+        # Button with loading text from web
         self.load_button = tk.Button(
             window,
             text="Wczytaj",
-            command=scrap_data)
+            command=lambda: scrap_data())
 
         self.load_button.grid(column=0, row=3)
 
@@ -53,13 +28,14 @@ class MainWindow:
         self.lbl4 = tk.Label(win, text='', font="none 12", padx=10, pady=10)
         self.lbl4.grid(column=0, row=4)
 
+        # Button with picking file with words to analize
         self.lbl3 = tk.Label(win, text='Wczytaj plik txt ze słowami', font="none 12")
         self.lbl3.grid(column=0, row=5)
 
         self.open_button = ttk.Button(
             win,
             text='Wybierz plik',
-            command=select_file
+            command=lambda: select_file(array_with_word)
         )
         self.open_button.grid(column=0, row=6)
 
@@ -70,10 +46,11 @@ class MainWindow:
         self.lbl3 = tk.Label(win, text='Dokonaj analizy na podstawie słów', font="none 12")
         self.lbl3.grid(column=0, row=8)
 
+        # Main program, analizing data with given array of words
         self.analize_button = ttk.Button(
             win,
             text='Analizuj',
-            command=analize
+            command=lambda: analize(array_with_word)
         )
         self.analize_button.grid(column=0, row=9)
 
