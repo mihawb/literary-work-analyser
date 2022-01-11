@@ -59,8 +59,9 @@ if __name__ == "__main__":
             bhand.close()
 
         except Exception as e:
-            errloghand.write(f'ERROR NO {errcount} | BOOK NO {bookcount}\n')
+            errloghand.write(f'ERROR NO {errcount} | BOOK NO {bookcount} (1-based indexing)\n')
             errloghand.write(f'{e}\n')
+            errloghand.write(f"API HREF: {book['href']}\n")
             errloghand.write(f"Title: {book['title']}\n")
             errloghand.write(f"Author: {book['author']}\n\n")
             errcount += 1
