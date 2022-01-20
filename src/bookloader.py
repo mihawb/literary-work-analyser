@@ -54,7 +54,12 @@ if __name__ == "__main__":
             bhand = open(f"../books/{book['author']}_{book['slug']}.txt", 'w', encoding = 'utf-8')
 
             for line in response.readlines():
-                bhand.write(line.decode('utf-8').rstrip() + '\n')
+                decoded = line.decode('utf-8').rstrip() + '\n'
+                
+                if decoded == '-----\n':
+                    break
+
+                bhand.write(decoded)
 
             bhand.close()
 
