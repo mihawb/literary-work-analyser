@@ -70,7 +70,7 @@ if __name__ == "__main__":
     errcount = 1
 
     for bookcount, slug in progressBar(slugs):
-        
+
         book = getJSONfromURL(f'https://wolnelektury.pl/api/books/{slug}/')
         authorslug = book['authors'][0]['slug']
 
