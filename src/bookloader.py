@@ -33,36 +33,67 @@ def getJSONfromURL(url):
     response = urlopen(url)
     return json.loads(response.read())
 
-if __name__ == "__main__":
-    books = getJSONfromURL('https://wolnelektury.pl/api/books/')
+slugs = [
+        'pan-tadeusz',
+        'dziady-dziady-poema-dziady-czesc-iii',
+        'dziady-dziady-poema-dziady-czesc-iv',
+        'quo-vadis',
+        'latarnik',
+        'krzyzacy-tom-pierwszy',
+        'krzyzacy-tom-drugi',
+        'syzyfowe-prace',
+        'ludzie-bezdomni-tom-pierwszy',
+        'ludzie-bezdomni-tom-drugi',
+        'przedwiosnie',
+        'wesele',
+        'noc-listopadowa',
+        'wyspianski-akropolis',
+        'deklaracja-praw-dziecka',
+        'konwencja-o-prawach-dziecka',
+        'deklaracja-praw-czlowieka',
+        'kamizelka',
+        'prus-dziwna-historia',
+        'prus-powiastki-cmentarne',
+        'pieklo-kobiet',
+        'jak-skonczyc-z-pieklem-kobiet',
+        'plotka-o-weselu-wyspianskiego',
+        'julianka',
+        'dobra-pani',
+        'orzeszkowa-ascetka'
+        ]
 
+if __name__ == "__main__":
     if not os.path.isdir('../books'):
         os.mkdir('../books')
         
     errloghand = open('../bookloader_err.log', 'w', encoding = 'utf-8')
     errcount = 1
 
-    for bookcount, book in progressBar(books):
+    for bookcount, slug in progressBar(slugs):
 
-        # DEPRECATED: significantly slower
-        # bookhref = getJSONfromURL(book['href'])
-        # txturl = bookhref['txt']
-        txturl = f"https://wolnelektury.pl/media/book/txt/{book['slug']}.txt"
+        book = getJSONfromURL(f'https://wolnelektury.pl/api/books/{slug}/')
+        authorslug = book['authors'][0]['slug']
 
         try:
-            response = urlopen(txturl)
-            bhand = open(f"../books/{book['author']}_{book['slug']}.txt", 'w', encoding = 'utf-8')
+            response = urlopen(book['txt'])
+            bhand = open(f'../books/{authorslug}_{slug}.txt', 'w', encoding = 'utf-8')
 
             for line in response.readlines():
-                bhand.write(line.decode('utf-8').rstrip() + '\n')
+                decoded = line.decode('utf-8').rstrip() + '\n'
+                
+                if decoded == '-----\n':
+                    break
+
+                bhand.write(decoded)
 
             bhand.close()
 
         except Exception as e:
-            errloghand.write(f'ERROR NO {errcount} | BOOK NO {bookcount}\n')
+            errloghand.write(f'ERROR NO {errcount} | BOOK NO {bookcount} (1-based indexing)\n')
             errloghand.write(f'{e}\n')
-            errloghand.write(f"Title: {book['title']}\n")
-            errloghand.write(f"Author: {book['author']}\n\n")
+            errloghand.write(f'API HREF: {book["href"]}\n')
+            errloghand.write(f'Title: {book["title"]}\n')
+            errloghand.write(f'Author: {book["author"]}\n\n')
             errcount += 1
 
     errloghand.close()
