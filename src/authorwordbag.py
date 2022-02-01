@@ -3,14 +3,6 @@ class WordBagOfAuthorClassifier:
     __unnecessary_chars = ["!",",",".","    ",":",";","?","(",")","—","*","»","…","«","—","-","„","”",'"',"°","'"] 
     __stops = ['a', 'aby', 'ach', 'acz', 'aczkolwiek', 'aj', 'albo', 'ale', 'alez', 'ależ', 'ani', 'az', 'aż', 'bardziej', 'bardzo', 'beda', 'bedzie', 'bez', 'deda', 'będą', 'bede', 'będę', 'będzie', 'bo', 'bowiem', 'by', 'byc', 'być', 'byl', 'byla', 'byli', 'bylo', 'byly', 'był', 'była', 'było', 'były', 'bynajmniej', 'cala', 'cali', 'caly', 'cała', 'cały', 'ci', 'cie', 'ciebie', 'cię', 'co', 'cokolwiek', 'cos', 'coś', 'czasami', 'czasem', 'czemu', 'czy', 'czyli', 'daleko', 'dla', 'dlaczego', 'dlatego', 'do', 'dobrze', 'dokad', 'dokąd', 'dosc', 'dość', 'duzo', 'dużo', 'dwa', 'dwaj', 'dwie', 'dwoje', 'dzis', 'dzisiaj', 'dziś', 'gdy', 'gdyby', 'gdyz', 'gdyż', 'gdzie', 'gdziekolwiek', 'gdzies', 'gdzieś', 'go', 'i', 'ich', 'ile', 'im', 'inna', 'inne', 'inny', 'innych', 'iz', 'iż', 'ja', 'jak', 'jakas', 'jakaś', 'jakby', 'jaki', 'jakichs', 'jakichś', 'jakie', 'jakis', 'jakiś', 'jakiz', 'jakiż', 'jakkolwiek', 'jako', 'jakos', 'jakoś', 'ją', 'je', 'jeden', 'jedna', 'jednak', 'jednakze', 'jednakże', 'jedno', 'jego', 'jej', 'jemu', 'jesli', 'jest', 'jestem', 'jeszcze', 'jeśli', 'jezeli', 'jeżeli', 'juz', 'już', 'kazdy', 'każdy', 'kiedy', 'kilka', 'kims', 'kimś', 'kto', 'ktokolwiek', 'ktora', 'ktore', 'ktorego', 'ktorej', 'ktory', 'ktorych', 'ktorym', 'ktorzy', 'ktos', 'ktoś', 'która', 'które', 'którego', 'której', 'który', 'których', 'którym', 'którzy', 'ku', 'lat', 'lecz', 'lub', 'ma', 'mają', 'mało', 'mam', 'mi', 'miedzy', 'między', 'mimo', 'mna', 'mną', 'mnie', 'moga', 'mogą', 'moi', 'moim', 'moj', 'moja', 'moje', 'moze', 'mozliwe', 'mozna', 'może', 'możliwe', 'można', 'mój', 'mu', 'musi', 'my', 'na', 'nad', 'nam', 'nami', 'nas', 'nasi', 'nasz', 'nasza', 'nasze', 'naszego', 'naszych', 'natomiast', 'natychmiast', 'nawet', 'nia', 'nią', 'nic', 'nich', 'nie', 'niech', 'niego', 'niej', 'niemu', 'nigdy', 'nim', 'nimi', 'niz', 'niż', 'no', 'o', 'obok', 'od', 'około', 'on', 'ona', 'one', 'oni', 'ono', 'oraz', 'oto', 'owszem', 'pan', 'pana', 'pani', 'po', 'pod', 'podczas', 'pomimo', 'ponad', 'poniewaz', 'ponieważ', 'powinien', 'powinna', 'powinni', 'powinno', 'poza', 'prawie', 'przeciez', 'przecież', 'przed', 'przede', 'przedtem', 'przez', 'przy', 'roku', 'rowniez', 'również', 'sam', 'sama', 'są', 'sie', 'się', 'skad', 'skąd', 'soba', 'sobą', 'sobie', 'sposob', 'sposób', 'swoje', 'ta', 'tak', 'taka', 'taki', 'takie', 'takze', 'także', 'tam', 'te', 'tego', 'tej', 'ten', 'teraz', 'też', 'to', 'toba', 'tobą', 'tobie', 'totez', 'toteż', 'totobą', 'trzeba', 'tu', 'tutaj', 'twoi', 'twoim', 'twoj', 'twoja', 'twoje', 'twój', 'twym', 'ty', 'tych', 'tylko', 'tym', 'u', 'w', 'wam', 'wami', 'was', 'wasz', 'wasza', 'wasze', 'we', 'według', 'wiele', 'wielu', 'więc', 'więcej', 'wlasnie', 'właśnie', 'wszyscy', 'wszystkich', 'wszystkie', 'wszystkim', 'wszystko', 'wtedy', 'wy', 'z', 'za', 'zaden', 'zadna', 'zadne', 'zadnych', 'zapewne', 'zawsze', 'ze', 'zeby', 'zeznowu', 'zł', 'znow', 'znowu', 'znów', 'zostal', 'został', 'żaden', 'żadna', 'żadne', 'żadnych', 'że', 'żeby']
 
-# chce miec slownik <autor: worek slow>
-
-# dla wszystkich ksiazek w books/ wyciagam nazwisko autora i do danego worka 
-# wkladamy kolejne wystapienia
-
-# worki slow ograniczamy do X najczesciej wystepujacych, X podane
-# jako parametr konstruktora
-
     def __findBooksPaths(self) -> list:
         result = []
         for root, dirs, files in os.walk(self.__booksRelPath):
@@ -61,9 +53,6 @@ class WordBagOfAuthorClassifier:
         for p in paths:
             self.__retrieveTokensFromBook(p)
         self.__truncateAuthorsWB()
-
-    def getWBforTestingPurposes(self) -> dict:
-        return self.__authorsWB
 
     def __buildTokenSet(self, frag) -> list:
         '''
@@ -121,7 +110,7 @@ class WordBagOfAuthorClassifier:
                 maxa = author
         return maxa
 
-    def getAuthors(self):
+    def getAuthors(self) -> list:
         return self.__authorsWB.keys()
 
     def __init__(self, booksRelPath, lim) -> None:
@@ -131,3 +120,19 @@ class WordBagOfAuthorClassifier:
 
         self.__buildAuthorsWB()
         self.__buildClassifier()
+
+# WordBagOfAuthorClassifier - do zadanego fragmentu autor jest dopasowywany na podstawie tylko najczestszych tokenow z calej puli dziel 
+# ewaluacja - wynik dopasowania = suma wystapien trafionych tokenow we fragmencie / suma wystapien wszystkich tokenow autora - wybierany jest autor o najwiekszej nocie 
+# natomiast moze lepiej byloby dac cos logarytmicznego wzgledem ilosci wszystkich tokenow??
+
+# pola:
+# __booksRelPath (str)  - sciezka do zbioru wszystkich ksiazek wszystkich autorow                               - na nich kompilowany jest klasyfikator
+# __lim (int)           - liczba najczestszych tokenow dla kazdego autora
+# __authorsWB (dict)    - mapa <author_slug : worek_slow>, gdzie worek_slow to mapa <token : ilosc_wystapien>   - zawiera najczestsze tokeny ze wszystkich dziel dla wszystkich autorow
+# __authorTotal (dict)  - mapa <author_slug : laczna_ilosc_wystapien_wszystkich_tokenow>                        - potrzebne do ewaluacji 
+# __authorScore (dict)  - mapa <author_slug : suma_wystapien_tokenow_autora_we_fragmencie>                      - potrzebne do ewaluacji
+
+# metody publiczne:
+# getAuthors() -> list              - zwraca liste wszytkich kategorii (autorow) skompilowanego klasyfikatora
+# classify(frag) -> str             - zwraca autora dopasowanego do fragmentu utworu
+# classifyFullProb(frag) -> dict    - zwraca mape <author_slug : wynik_dopasowania> czyli wyniki dopasowania do fragmentu dla wszystkich autorow, przydatne raczej do debugu 

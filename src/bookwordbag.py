@@ -132,3 +132,19 @@ class WordBagOfOneBookClassifier:
 
 # TODO moze przy klasyfykacji zbierac tez info o sredniej ilosci wystapien tokenu,
 # a nie tylko o sumie wystapien dla wszystkich tokenow fragmentu?
+
+# WordBagOfOneBookClassifier - do zadanego fragmentu autor jest dopasowywany na podstawie wszystkich tokenow z tylko jednej ksiazki autora
+# ewaluacja - wynik dopasowania = suma wystapien trafionych tokenow we fragmencie / suma wystapien wszystkich tokenow autora - wybierany jest autor o najwiekszej nocie 
+# natomiast moze lepiej byloby dac cos logarytmicznego wzgledem ilosci wszystkich tokenow??
+
+# pola:
+# __booksRelPath (str)  - sciezka do zbioru uczacego, tj folderu z pojedynczymi ksiazkami roznych autorow           - na nich kompilowany jest klasyfikator
+# __booksWB (dict)      - mapa <author_title_slug : worek_slow>, gdzie worek_slow to mapa <token : ilosc_wystapien> - zawiera wszystkie tokeny z pojedynczych dziel
+# authors (list)        - lista slugow autorow zawartych w zbiorze uczacym
+# __authorTotal (dict)  - mapa <author_slug : laczna_ilosc_wystapien_wszystkich_tokenow>                            - potrzebne do ewaluacji 
+# __authorScore (dict)  - mapa <author_slug : suma_wystapien_tokenow_autora_we_fragmencie>                          - potrzebne do ewaluacji
+
+# metody publiczne:
+# getAuthors() -> list              - zwraca liste wszytkich kategorii (autorow) skompilowanego klasyfikatora
+# classify(frag) -> str             - zwraca autora dopasowanego do fragmentu utworu
+# classifyFullProb(frag) -> dict    - zwraca mape <author_slug : wynik_dopasowania> czyli wyniki dopasowania do fragmentu dla wszystkich autorow, przydatne raczej do debugu 

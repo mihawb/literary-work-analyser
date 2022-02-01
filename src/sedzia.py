@@ -1,6 +1,6 @@
 import os, fnmatch, random
-import authorwordbag as awb
-import bookwordbag as bwb
+from authorwordbag import WordBagOfAuthorClassifier
+from bookwordbag import WordBagOfOneBookClassifier
 
 def sedzia(klasyfikator, zbior_ksiazek, ilosc_testow, ilosc_linii, seed=0, lim=0):
     defaultbookpath = '..\\books'
@@ -55,13 +55,20 @@ def sedzia(klasyfikator, zbior_ksiazek, ilosc_testow, ilosc_linii, seed=0, lim=0
         odp = K.classify(rfrags[t])
         rodps.append(odp)
 
-    return rauthors, rbooks, rfrags, rodps   
+    return rauthors, rbooks, rfrags, rodps
 
-# AWB potrzebuje: '..\\books', limitu
-# BWB potrzebuje: '..\\zb_uczacy'
+    # rauthors (list of str)    - lista faktycznych autorow danych fragmentow               - zapisane jako author_slug
+    # rbooks (list of str)      - lista ksiazek z ktorych pochodza dane fragmenty           - zapisane jako author_title_slug
+    # rfrags (list of str)      - lista fargmentow w formie stringow                        - doslownie fragmenty ksiazek ale, zapisane bez znakow nowej linii
+    # rodps (list of str)       - lista autorow jakie klasyfikator przypisal danemu frag.   - zapisane jako author_slug
 
-a, b, f, r = sedzia(awb.WordBagOfAuthorClassifier, '..\\books', 10, 100, 1337, 200)
-# a, b, f, r = sedzia(bwb.WordBagOfOneBookClassifier, '..\\zb_uczacy', 10, 100, 1234)
 
-for i in range(10):
-    print(a[i], r[i], a[i] == r[i], b[i])
+if __name__ == "__main__":
+    # AWB potrzebuje: '..\\books', limitu
+    # BWB potrzebuje: '..\\zb_uczacy'
+
+    # a, b, f, r = sedzia(WordBagOfAuthorClassifier, '..\\books', 10, 100, 1337, 200)
+    a, b, f, r = sedzia(WordBagOfOneBookClassifier, '..\\zb_uczacy', 10, 100, 1234)
+
+    for i in range(10):
+        print(a[i], r[i], a[i] == r[i], b[i])
