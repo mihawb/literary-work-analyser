@@ -107,7 +107,7 @@ class WordBagOfAuthorClassifier:
         self.__prepareClassification(frag)
         result = dict()
         for author in self.__authorScore:
-            result[author] = self.__authorScore[author] # / self.__authorTotal[author] * 100
+            result[author] = self.__authorScore[author] / self.__authorTotal[author] * 100
         
         return result
 
@@ -120,6 +120,9 @@ class WordBagOfAuthorClassifier:
                 maxi = full[author]
                 maxa = author
         return maxa
+
+    def getAuthors(self):
+        return self.__authorsWB.keys()
 
     def __init__(self, booksRelPath, lim) -> None:
         self.__booksRelPath = booksRelPath
