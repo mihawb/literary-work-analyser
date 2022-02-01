@@ -1,4 +1,3 @@
-from email.policy import default
 import os, fnmatch, random
 import authorwordbag as awb
 import bookwordbag as bwb
