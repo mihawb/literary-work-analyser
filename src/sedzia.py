@@ -1,6 +1,4 @@
 import os, fnmatch, random
-from authorwordbag import WordBagOfAuthorClassifier
-from bookwordbag import WordBagOfOneBookClassifier
 
 def sedzia(klasyfikator, zbior_ksiazek, ilosc_testow, ilosc_linii, seed=0, lim=0):
     defaultbookpath = '..\\books'
@@ -62,13 +60,3 @@ def sedzia(klasyfikator, zbior_ksiazek, ilosc_testow, ilosc_linii, seed=0, lim=0
     # rfrags (list of str)      - lista fargmentow w formie stringow                        - doslownie fragmenty ksiazek ale, zapisane bez znakow nowej linii
     # rodps (list of str)       - lista autorow jakie klasyfikator przypisal danemu frag.   - zapisane jako author_slug
 
-
-if __name__ == "__main__":
-    # AWB potrzebuje: '..\\books', limitu
-    # BWB potrzebuje: '..\\zb_uczacy'
-
-    # a, b, f, r = sedzia(WordBagOfAuthorClassifier, '..\\books', 10, 100, 1337, 200)
-    a, b, f, r = sedzia(WordBagOfOneBookClassifier, '..\\zb_uczacy', 10, 100, 1234)
-
-    for i in range(10):
-        print(a[i], r[i], a[i] == r[i], b[i])
