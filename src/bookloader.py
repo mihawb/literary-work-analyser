@@ -31,7 +31,7 @@ slugs = [
 
 
 #Odczytujemy książki na podstawie slugs
-#get_books_according_to_slugs(slugs)
+get_books_according_to_slugs(slugs)
 
 #Odczytujemy książki na podstawie autora
 #get_books_of_given_author('juliusz-slowacki')
