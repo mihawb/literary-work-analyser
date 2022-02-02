@@ -101,15 +101,6 @@ class TxtDocMatrixClassifier:
     
     def getAuthors(self) -> list:
         return self.authors
-    
-#     def getAuthWB(self):
-#         return self.__authorsWB
-    
-#     def getFragDict(self):
-#         return self.__fragTokens
-
-#     def getTDM(self):
-#         return self.__fragTDM
 
     def __init__(self, bookRelPath, lim) -> None:
         self.__booksRelPath = bookRelPath
