@@ -1,5 +1,7 @@
+import sys
+sys.path.insert(1, '..')
 import os, fnmatch
-from tknz import *
+from src.tknz import *
 
 class WordBagOfOneBookClassifierWithConnectedTokens:
       
@@ -49,6 +51,11 @@ class WordBagOfOneBookClassifierWithConnectedTokens:
             title = p[len(self.__booksRelPath)+1:dtidx]
             self.__booksWB[title] = self.__buildTokenDict(p)
             self.books.append(title)
+
+            usidx = p.index('_', len(self.__booksRelPath)+1)
+            author = p[len(self.__booksRelPath)+1:usidx]
+            if author not in self.authors:
+                self.authors.append(author)
     
     def __buildClassifier(self) -> None:
         self.__bookScore = dict()
@@ -67,7 +74,7 @@ class WordBagOfOneBookClassifierWithConnectedTokens:
         for book in self.__booksWB:
             for token in fragtokens:
                 self.__bookScore[book] += self.__booksWB[book].get(token, 0)
-                
+
     def classifyFullProb(self, frag) -> dict:
         self.__prepareClassification(frag)
         result = dict()
@@ -94,9 +101,13 @@ class WordBagOfOneBookClassifierWithConnectedTokens:
                 maxb = book
 
         return maxb
-      
+    
+    def getAuthors(self) -> list:
+        return self.authors
+
     def __init__(self, booksRelPath) -> None:
         self.books = []
+        self.authors = []
         self.__booksRelPath = booksRelPath
         
         self.__buildBooksWB()
