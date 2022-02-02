@@ -1,11 +1,10 @@
 import os, fnmatch, random
 
-def sedzia(klasyfikator, zbior_ksiazek, ilosc_testow, ilosc_linii, seed=0, lim=0):
-    defaultbookpath = '..\\books'
+def sedzia(klasyfikator, zbior_ksiazek, zbior_klas, ilosc_testow, ilosc_linii, seed=0, lim=0):
     if lim == 0:
-        K = klasyfikator(zbior_ksiazek)
+        K = klasyfikator(zbior_klas) #klas
     else:
-        K = klasyfikator(zbior_ksiazek, lim)
+        K = klasyfikator(zbior_klas, lim) #klas
 
     rauthors = []
     rfrags = []
@@ -18,15 +17,15 @@ def sedzia(klasyfikator, zbior_ksiazek, ilosc_testow, ilosc_linii, seed=0, lim=0
 
     paths = []
     for author in authors:
-        for root, dirs, files in os.walk(defaultbookpath):
+        for root, dirs, files in os.walk(zbior_ksiazek):
             for name in files:
                 if fnmatch.fnmatch(name, author + '_*.txt'):
                     paths.append(os.path.join(root, name))
 
     for path in paths:
         with open(path, 'r', encoding='utf-8') as book:
-            dtidx = path.index('.', len(defaultbookpath)+1)
-            title = path[len(defaultbookpath)+1:dtidx]
+            dtidx = path.index('.', len(zbior_ksiazek)+1)
+            title = path[len(zbior_ksiazek)+1:dtidx]
             books[title] = []
 
             for line in book:
